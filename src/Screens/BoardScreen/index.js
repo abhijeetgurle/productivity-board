@@ -7,26 +7,51 @@ import Grid from '@mui/material/Grid';
 import Column from '../../Components/Column';
 import CreateEditTask from '../../Components/CreateEditTask';
 
-const toDoTasks = [
-    {
-        title: "Complete React Course",
-        description: "Some description text here..."
-    },
-    {
-        title: "Complete JS Course",
-        description: "Some description text here..."
-    },
-    {
-        title: "Complete Java Course",
-        description: "Some description text here..."
-    },
-]
 export default function BoardScreen(props) {
     const [isModalOpen, setModalOpen] = useState(false);
+    const [taskTitle, setTaskTitle] = useState('');
+    const [taskDescription, setTaskDescription] = useState('')
+    const [toDoTasks, setToDoTasks] = useState([
+        {
+            title: "Complete React Course",
+            description: "Some description text here..."
+        },
+        {
+            title: "Complete JS Course",
+            description: "Some description text here..."
+        },
+        {
+            title: "Complete Java Course",
+            description: "Some description text here..."
+        },
+    ])
+
     const onClose = () => { setModalOpen(false) }
+
+    const onTaskTitleChange = (e) => {
+        setTaskTitle(e.target.value)
+    }
+
+    const onTaskDescriptionChange = (e) => {
+        setTaskDescription(e.target.value)
+    }
+
+    const onCreateTaskClick = () => {
+        const newTask = {
+            title: taskTitle,
+            description: taskDescription
+        }
+
+        const toDoTasksCopy = [newTask, ...toDoTasks]
+        setToDoTasks(toDoTasksCopy)
+        setModalOpen(false)
+        setTaskTitle('')
+        setTaskDescription('')
+    }
+
     return (
         <div className="board-container">
-            <CreateEditTask open={isModalOpen} handleClose={onClose} />
+            <CreateEditTask open={isModalOpen} handleClose={onClose} taskTitle={taskTitle} taskDescription={taskDescription} onTaskTitleChange={onTaskTitleChange} onTaskDescriptionChange={onTaskDescriptionChange} onCreateTaskClick={onCreateTaskClick} />
             <div className="board-header">
                 <Typography variant="h4" component="div">
                     {props.boardName}
