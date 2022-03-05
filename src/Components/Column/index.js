@@ -26,6 +26,7 @@ export default function Column(props) {
                         type={props.type}
                         onTaskStatusChange={props.onTaskStatusChange}
                         onEditTaskClicked={props.onEditTaskClicked}
+                        onDeleteTaskClicked={props.onDeleteTaskClicked}
                     />
                 ))
             }
