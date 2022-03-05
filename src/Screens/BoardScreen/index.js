@@ -11,32 +11,22 @@ export default function BoardScreen(props) {
     const [isModalOpen, setModalOpen] = useState(false);
     const [taskTitle, setTaskTitle] = useState('');
     const [taskDescription, setTaskDescription] = useState('')
-    const [tasks, setTasks] = useState([
+    const [toDoTasks, setToDoTasks] = useState([
         {
-            id: 1,
             title: "Complete React Course",
-            description: "Some description text here...",
-            status: "TODO"
+            description: "Some description text here..."
         },
         {
-            id: 2,
             title: "Complete JS Course",
-            description: "Some description text here...",
-            status: "DOING"
+            description: "Some description text here..."
         },
         {
-            id: 3,
             title: "Complete Java Course",
-            description: "Some description text here...",
-            status: "TODO"
+            description: "Some description text here..."
         },
     ])
-    const [modalTitle, setModalTitle] = useState("Create New Task");
 
-    const onClose = () => { 
-        setModalOpen(false); 
-        setModalTitle("Create New Task")
-    }
+    const onClose = () => { setModalOpen(false) }
 
     const onTaskTitleChange = (e) => {
         setTaskTitle(e.target.value)
@@ -48,35 +38,20 @@ export default function BoardScreen(props) {
 
     const onCreateTaskClick = () => {
         const newTask = {
-            id: tasks.length + 1,
             title: taskTitle,
-            description: taskDescription,
-            status: "TODO"
+            description: taskDescription
         }
 
-        const toDoTasksCopy = [newTask, ...tasks]
-        setTasks(toDoTasksCopy)
+        const toDoTasksCopy = [newTask, ...toDoTasks]
+        setToDoTasks(toDoTasksCopy)
         setModalOpen(false)
         setTaskTitle('')
         setTaskDescription('')
     }
 
-    const onTaskStatusChange = (taskId, status) => {
-        const tasksCopy = [...tasks];
-        const taskUpdated = tasksCopy.find(task => task.id === taskId);
-        taskUpdated.status = status;
-        setTasks(tasksCopy);
-    }
-
-    const onEditTaskClicked = (taskId) => {
-        setModalTitle("Edit Task")
-        setModalOpen(true)
-    }
-
-
     return (
         <div className="board-container">
-            <CreateEditTask modalTitle={modalTitle} open={isModalOpen} handleClose={onClose} taskTitle={taskTitle} taskDescription={taskDescription} onTaskTitleChange={onTaskTitleChange} onTaskDescriptionChange={onTaskDescriptionChange} onCreateTaskClick={onCreateTaskClick} />
+            <CreateEditTask open={isModalOpen} handleClose={onClose} taskTitle={taskTitle} taskDescription={taskDescription} onTaskTitleChange={onTaskTitleChange} onTaskDescriptionChange={onTaskDescriptionChange} onCreateTaskClick={onCreateTaskClick} />
             <div className="board-header">
                 <Typography variant="h4" component="div">
                     {props.boardName}
@@ -91,13 +66,13 @@ export default function BoardScreen(props) {
             </div>
             <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 12, md: 12 }}>
                 <Grid item xs={4} sm={6} md={4}>
-                    <Column title="Todo" tasks={tasks} type="TODO" onTaskStatusChange={onTaskStatusChange} onEditTaskClicked={onEditTaskClicked} />
+                    <Column title="Todo" tasks={toDoTasks} />
                 </Grid>
                 <Grid item xs={4} sm={4} md={4}>
-                    <Column title="Doing" tasks={tasks} type="DOING" onTaskStatusChange={onTaskStatusChange} onEditTaskClicked={onEditTaskClicked} />
+                    <Column title="Doing" tasks={[]} />
                 </Grid>
                 <Grid item xs={4} sm={4} md={4}>
-                    <Column title="Done" tasks={tasks} type="DONE" onTaskStatusChange={onTaskStatusChange} onEditTaskClicked={onEditTaskClicked} />
+                    <Column title="Done" tasks={[]} />
                 </Grid>
             </Grid>
         </div>
