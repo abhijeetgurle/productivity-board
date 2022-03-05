@@ -26,7 +26,7 @@ export default function CreateEditTask(props) {
     >
       <Box sx={style}>
         <Typography variant="h5" component="div" align="center" gutterBottom>
-          Create New Task
+          {props.modalTitle}
         </Typography>
         <TextField
           id="outlined-basic"
