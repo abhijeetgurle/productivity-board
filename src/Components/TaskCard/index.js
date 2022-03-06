@@ -22,6 +22,7 @@ export default function TaskCard(props) {
           <Button size="large" startIcon={<CreateIcon />} onClick={() => props.onEditTaskClicked(props.taskId)}>
             Edit
           </Button>
+          <Button onClick={() => props.onDeleteTaskClicked(props.taskId)}>Delete</Button>
           <FormControl style={{width: '10rem'}}>
             <InputLabel id="demo-simple-select-label">Status</InputLabel>
               <Select
